@@ -17,3 +17,6 @@ spec:
           image: automationrepository.azurecr.io/logmessageprocessor-image
           ports:
             - containerPort: 6029
+          env:
+            - name: REDIS_HOST
+              value: "redis"
