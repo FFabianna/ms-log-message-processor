@@ -15,7 +15,7 @@ def log_message(message):
 if __name__ == '__main__':
     redis_host = os.environ['REDIS_HOST']
     redis_port = int(os.environ['REDIS_PORT'])
-    redis_password = os.environ['REDIS_PASSWORD']
+    redis_password = os.environ['REDIS_PASSWORD'] if 'REDIS_PASSWORD' in os.environ else ''
     redis_channel = os.environ['REDIS_CHANNEL']
     zipkin_url = os.environ['ZIPKIN_URL'] if 'ZIPKIN_URL' in os.environ else ''
     def http_transport(encoded_span):
