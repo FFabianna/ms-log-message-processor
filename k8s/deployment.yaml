@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: logmessageprocessor
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: logmessageprocessor
+  template:
+    metadata:
+      labels:
+        app: logmessageprocessor
+    spec:
+      containers:
+        - name: logmessageprocessor
+          image: automationrepository.azurecr.io/logmessageprocessor-image
+          ports:
+            - containerPort: 6029

@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: logmessageprocessor
+spec:
+  selector:
+    app: logmessageprocessor
+  ports:
+    - port: 6029
+      targetPort: 6029
+  type: ClusterIP

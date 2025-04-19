@@ -1,0 +1,49 @@
+name: Deploy Log Message Processor to AKS
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  REGISTRY: automationrepository.azurecr.io
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set image tag from commit SHA
+      run: echo "IMAGE_TAG=${{ github.sha }}" >> $GITHUB_ENV
+
+    - name: Azure login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Azure ACR login
+      run: az acr login --name automationrepository
+
+    - name: Build and push Docker images
+      run: |
+        docker build -t $REGISTRY/logmessageprocessor-image:${IMAGE_TAG} -t $REGISTRY/logmessageprocessor-image:latest .
+        docker push $REGISTRY/logmessageprocessor-image:${IMAGE_TAG}
+        docker push $REGISTRY/logmessageprocessor-image:latest
+
+    - name: Set AKS context
+      uses: azure/aks-set-context@v3
+      with:
+        resource-group: ${{ secrets.AKS_RESOURCE_GROUP }}
+        cluster-name: ${{ secrets.AKS_CLUSTER_NAME }}
+
+    - name: Deploy to AKS with kubectl
+      run: |
+        kubectl apply -f k8s/deployment.yaml
+        kubectl apply -f k8s/service.yaml
+
+    - name: Ensure latest image is deployed
+      run: |
+        kubectl set image deployment/logmessageprocessor logmessageprocessor=$REGISTRY/logmessageprocessor-image:${IMAGE_TAG}
