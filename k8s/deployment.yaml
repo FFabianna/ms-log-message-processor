@@ -19,8 +19,10 @@ spec:
             - containerPort: 6029
           env:
             - name: REDIS_HOST
-              value: "redis"
+              value: redis
             - name: REDIS_PORT
-              value: "6379"
+              value: 6379
+            - name: REDIS_PASSWORD
+              value: ""
             - name: REDIS_CHANNEL
-              value: "log_channel"
+              value: log_channel
