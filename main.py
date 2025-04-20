@@ -31,7 +31,7 @@ if __name__ == '__main__':
         print('item')
         print(item)
         try:
-            message = json.loads(str(item['data'].decode("utf-8")))
+            message = json.loads(str(item['data']))
         except Exception as e:
             log_message(e)
             continue
