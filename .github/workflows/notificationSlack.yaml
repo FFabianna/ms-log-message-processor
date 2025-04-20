@@ -1,0 +1,16 @@
+name: cicd-workflow with slack integration
+on:
+  push:
+    branches: [ "main" ]
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+    steps:
+    - uses: act10ns/slack@v2
+      with:
+        status: starting
+        channel: '#notificaciones'
+        message: Hola, Se ha realizado cambios en el reposiorio ms-log-message-processor!!!
+      if: always()
