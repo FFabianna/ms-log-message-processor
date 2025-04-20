@@ -28,6 +28,8 @@ if __name__ == '__main__':
     pubsub = redis.Redis(host=redis_host, port=redis_port, password=redis_password, decode_responses=True, db=0).pubsub()
     pubsub.subscribe([redis_channel])
     for item in pubsub.listen():
+        print('item')
+        print(item)
         try:
             message = json.loads(str(item['data'].decode("utf-8")))
         except Exception as e:
