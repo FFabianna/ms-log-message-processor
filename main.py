@@ -36,6 +36,8 @@ if __name__ == '__main__':
             log_message(e)
             continue
         print('zipkinSpan' not in str(message))
+        print('zipkin_url')
+        print(zipkin_url)
         if not zipkin_url or 'zipkinSpan' not in str(message):
             print('Not zipkin span')
             log_message(message)
