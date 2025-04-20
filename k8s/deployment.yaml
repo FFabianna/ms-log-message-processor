@@ -24,3 +24,5 @@ spec:
               value: "6379"
             - name: REDIS_CHANNEL
               value: "log_channel"
+            - name: ZIPKIN_URL
+              value: "http://zipkin:9411/api/v2/spans"
