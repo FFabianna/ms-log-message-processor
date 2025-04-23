@@ -1,4 +1,4 @@
-name: Deploy Log Message Processor to AKS
+name: CD Pipeline
 
 on:
   push:
@@ -9,7 +9,7 @@ env:
   REGISTRY: automationrepository.azurecr.io
 
 jobs:
-  build-and-push:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
